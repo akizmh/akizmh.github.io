@@ -1383,12 +1383,12 @@ blockquote footer cite:before {
 .m-menu ul li a:hover {
   text-decoration: underline;
 }
-.m-sort .sort-item {
-  margin-bottom: 32px;
-}
 .m-sort h3 {
   font-size: 20px;
   margin-bottom: 18px;
+}
+.m-sort .sort-item {
+  margin-bottom: 32px;
 }
 .m-sort .title {
   margin-bottom: 12px;
@@ -1409,7 +1409,4 @@ blockquote footer cite:before {
 .m-pager .disabled {
   cursor: default;
   color: #aaa;
-}
-.m-aa {
-  text-align: center;
 }
