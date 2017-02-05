@@ -1415,12 +1415,43 @@ a:hover {
 .m-aside .footer a:hover {
   text-decoration: underline;
 }
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  .m-aside {
+    width: 32%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .m-aside {
+    position: static;
+    margin-top: 64px;
+    width: 100%;
+  }
+  .m-aside .main {
+    padding: 28px 0 32px 0;
+  }
+  .m-aside .footer {
+    display: none;
+  }
+}
 .m-content {
   position: absolute;
   left: 360px;
   top: 64px;
   right: 0;
   bottom: 0;
+}
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  .m-content {
+    left: 32%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .m-content {
+    position: static;
+  }
+  .m-content .g-content {
+    padding: 20px;
+  }
 }
 .m-article .index-article {
   margin-bottom: 24px;
@@ -1530,6 +1561,23 @@ a:hover {
 }
 .m-menu ul li a:hover {
   text-shadow: 1px 1px 2px #c9171e;
+}
+.m-menu ul li .current {
+  text-shadow: 1px 1px 2px #c9171e;
+}
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  .m-menu {
+    left: 32%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .m-menu {
+    left: 0;
+    top: 0;
+  }
+  .m-menu ul {
+    padding-left: 20px;
+  }
 }
 .m-sort h3 {
   font-size: 20px;
