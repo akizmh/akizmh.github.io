@@ -54,6 +54,47 @@
     <h3 class="article-title">
         
             
+                <a href="/2017/02/20/es6-class/">class -《ECMAScript 6 入门》学习笔记</a>
+            
+        
+    </h3>
+    <!-- content -->
+    <div class="article-content">
+        
+            <p>最近在看阮一峰的<a href="http://es6.ruanyifeng.com/">《ECMAScript 6 入门》</a>。以下内容为学习笔记和摘要，代码大部分也用了那边。</p>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>ES5中我们创建一个类一般使用构造函数，ES6里面可以用class关键字实现，是一种语法糖。<br>ES5 写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span>(<span class="params">x, y</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.x = x;</div><div class="line">  <span class="keyword">this</span>.y = y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Point.prototype.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'('</span> + <span class="keyword">this</span>.x + <span class="string">', '</span> + <span class="keyword">this</span>.y + <span class="string">')'</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>ES6写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(x, y) &#123;</div><div class="line">    <span class="keyword">this</span>.x = x;</div><div class="line">    <span class="keyword">this</span>.y = y;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  toString() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'('</span> + <span class="keyword">this</span>.x + <span class="string">', '</span> + <span class="keyword">this</span>.y + <span class="string">')'</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2017/02/20/es6-class/#more">更多...</a>
+            </p>
+        
+    </div>
+    <!-- footer -->
+    <div class="article-footer">
+        <i class="iconfont icon-calendar"></i>
+        <span class="article-footer-item">2017-02-20</span>
+        
+            <i class="iconfont icon-book"></i>
+            <span class="article-footer-item">
+                <a class="category-link" href="/categories/技术/">技术</a>
+            </span>
+        
+        
+            <i class="iconfont icon-tags"></i>
+            <span class="article-footer-item">
+                <a class="tag-link" href="/tags/ES6/">ES6</a>
+            </span>
+        
+    </div>
+    
+</article>
+
+    
+      <article class="index-article">
+    <!-- title -->
+    <h3 class="article-title">
+        
+            
                 <a href="/2017/02/13/githubBlog/">github博客诞生记</a>
             
         
