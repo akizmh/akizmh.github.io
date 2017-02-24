@@ -54,6 +54,53 @@
     <h3 class="article-title">
         
             
+                <a href="/2017/02/24/object2/">Object方法整理(2)</a>
+            
+        
+    </h3>
+    <!-- content -->
+    <div class="article-content">
+        
+            <p>接上篇，本篇介绍Object上的获取型方法以及Oject原型上定义的方法。</p>
+<h2 id="Object-getOwnPropertyDescriptor-obj-prop"><a href="#Object-getOwnPropertyDescriptor-obj-prop" class="headerlink" title="Object.getOwnPropertyDescriptor(obj, prop)"></a>Object.getOwnPropertyDescriptor(obj, prop)</h2><p>返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
+<ul>
+<li><strong>obj:</strong> 要查看的对象</li>
+<li><strong>prop:</strong> 一个属性名称，该属性的属性描述符将被返回</li>
+</ul>
+<p>如果指定的属性存在于对象上，则返回其属性描述符（property descriptor），否则返回 undefined。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o, d;</div><div class="line"></div><div class="line">o = &#123; get foo() &#123; <span class="keyword">return</span> <span class="number">17</span>; &#125; &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"foo"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, get: /*访问器函数*/, set: undefined &#125;</span></div><div class="line"></div><div class="line">o = &#123; <span class="attr">bar</span>: <span class="number">42</span> &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"bar"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, value: 42, writable: true &#125;</span></div><div class="line"></div><div class="line">o = &#123;&#125;;</div><div class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">"baz"</span>, &#123; <span class="attr">value</span>: <span class="number">8675309</span>&#125;);</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"baz"</span>);</div><div class="line"><span class="comment">// d is &#123; value: 8675309, writable: false, enumerable: false, configurable: false &#125;</span></div></pre></td></tr></table></figure>
+<hr>
+            <p class="article-more-link">
+                <a href="/2017/02/24/object2/#more">更多...</a>
+            </p>
+        
+    </div>
+    <!-- footer -->
+    <div class="article-footer">
+        <i class="iconfont icon-calendar"></i>
+        <span class="article-footer-item">2017-02-24</span>
+        
+            <i class="iconfont icon-book"></i>
+            <span class="article-footer-item">
+                <a class="category-link" href="/categories/技术/">技术</a>
+            </span>
+        
+        
+            <i class="iconfont icon-tags"></i>
+            <span class="article-footer-item">
+                <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+            </span>
+        
+    </div>
+    
+</article>
+
+    
+      <article class="index-article">
+    <!-- title -->
+    <h3 class="article-title">
+        
+            
                 <a href="/2017/02/23/object1/">Object方法整理(1)</a>
             
         

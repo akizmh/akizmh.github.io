@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
+    
+    <title>Object方法整理(2) | akizmh&#39;s blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="m-aside ">
+    <div class="main">
+        <div class="username">破秋风</div>
+        <div class="motto">赞美太阳</div>
+        <div class="social-links">
+            
+                <a class="iconfont icon-github" href="https://github.com/akizmh" target="_blank"></a>
+            
+                <a class="iconfont icon-weibo" href="http://weibo.com/1669914685/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank"></a>
+            
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2017 akizmh<br>
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+</div>
+    <div class="m-menu">
+    <ul>
+        
+            <li><a href="/" class="">首页
+</a></li>
+        
+            <li><a href="/archives" class="">归档
+</a></li>
+        
+            <li><a href="/tags" class="">标签
+</a></li>
+        
+            <li><a href="/categories" class="">分类
+</a></li>
+        
+            <li><a href="/about" class="">关于
+</a></li>
+        
+    </ul>
+</div>
+    <div class="m-content"><div class="g-content m-article">
+    <article class="index-article">
+    <!-- title -->
+    <h3 class="article-title">
+        
+            
+                Object方法整理(2)
+            
+        
+    </h3>
+    <!-- content -->
+    <div class="article-content">
+        
+            <p>接上篇，本篇介绍Object上的获取型方法以及Oject原型上定义的方法。</p>
+<h2 id="Object-getOwnPropertyDescriptor-obj-prop"><a href="#Object-getOwnPropertyDescriptor-obj-prop" class="headerlink" title="Object.getOwnPropertyDescriptor(obj, prop)"></a>Object.getOwnPropertyDescriptor(obj, prop)</h2><p>返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
+<ul>
+<li><strong>obj:</strong> 要查看的对象</li>
+<li><strong>prop:</strong> 一个属性名称，该属性的属性描述符将被返回</li>
+</ul>
+<p>如果指定的属性存在于对象上，则返回其属性描述符（property descriptor），否则返回 undefined。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o, d;</div><div class="line"></div><div class="line">o = &#123; get foo() &#123; <span class="keyword">return</span> <span class="number">17</span>; &#125; &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"foo"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, get: /*访问器函数*/, set: undefined &#125;</span></div><div class="line"></div><div class="line">o = &#123; <span class="attr">bar</span>: <span class="number">42</span> &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"bar"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, value: 42, writable: true &#125;</span></div><div class="line"></div><div class="line">o = &#123;&#125;;</div><div class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">"baz"</span>, &#123; <span class="attr">value</span>: <span class="number">8675309</span>&#125;);</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"baz"</span>);</div><div class="line"><span class="comment">// d is &#123; value: 8675309, writable: false, enumerable: false, configurable: false &#125;</span></div></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<h2 id="Object-getOwnPropertyDescriptors-obj"><a href="#Object-getOwnPropertyDescriptors-obj" class="headerlink" title="Object.getOwnPropertyDescriptors(obj)"></a>Object.getOwnPropertyDescriptors(obj)</h2><p>用来获取一个对象的所有自身属性的描述符。<br>如果指定对象没有任何自身属性，则返回空对象。 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//浅拷贝一个对象</span></div><div class="line"><span class="built_in">Object</span>.create(</div><div class="line">  <span class="built_in">Object</span>.getPrototypeOf(obj), </div><div class="line">  <span class="built_in">Object</span>.getOwnPropertyDescriptors(obj) </div><div class="line">);</div></pre></td></tr></table></figure>
+<p>上述代码与Object.assign()相比， 后者只能拷贝源对象的可枚举的自身属性，无法拷贝属性的特性们，而且访问器属性会被转换成数据属性，也无法拷贝源对象的原型，上述代码可以实现上面说的这些。</p>
+<hr>
+<h2 id="Object-getOwnPropertyNames-obj"><a href="#Object-getOwnPropertyNames-obj" class="headerlink" title="Object.getOwnPropertyNames(obj)"></a>Object.getOwnPropertyNames(obj)</h2><p>返回一个由指定对象的所有<strong>自身属性</strong>的属性名（包括不可枚举属性）组成的数组。数组中枚举属性的顺序与通过 for…in 循环（或 Object.keys）迭代该对象属性时一致。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(arr).sort()); <span class="comment">// ["0", "1", "2", "length"]</span></div><div class="line"></div><div class="line"><span class="comment">// 类数组对象</span></div><div class="line"><span class="keyword">var</span> obj = &#123; <span class="number">0</span>: <span class="string">"a"</span>, <span class="number">1</span>: <span class="string">"b"</span>, <span class="number">2</span>: <span class="string">"c"</span>&#125;;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(obj).sort()); <span class="comment">// ["0", "1", "2"]</span></div><div class="line"></div><div class="line"><span class="comment">//不可枚举属性</span></div><div class="line"><span class="keyword">var</span> my_obj = <span class="built_in">Object</span>.create(&#123;&#125;, &#123;</div><div class="line">  <span class="attr">getFoo</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.foo; &#125;,</div><div class="line">    <span class="attr">enumerable</span>: <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">my_obj.foo = <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(my_obj).sort()); <span class="comment">// ["foo", "getFoo"]</span></div></pre></td></tr></table></figure>
+<p>因为Object.getOwnPropertyNames(obj)只会获取自身属性，所以继承来的属性并不会获得。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ParentClass</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">ParentClass.prototype.inheritedMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ChildClass</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.prop = <span class="number">5</span>;</div><div class="line">  <span class="keyword">this</span>.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">ChildClass.prototype = <span class="keyword">new</span> ParentClass;</div><div class="line">ChildClass.prototype.prototypeMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  <span class="built_in">Object</span>.getOwnPropertyNames(</div><div class="line">    <span class="keyword">new</span> ChildClass()  <span class="comment">// ["prop", "method"]</span></div><div class="line">  )</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="Object-getOwnPropertySymbols-obj"><a href="#Object-getOwnPropertySymbols-obj" class="headerlink" title="Object.getOwnPropertySymbols(obj)"></a>Object.getOwnPropertySymbols(obj)</h2><p>返回一个数组，该数组包含了指定对象自身的（非继承的）所有 symbol 属性键。</p>
+<p>该方法和 Object.getOwnPropertyNames() 类似，但后者返回的结果只会包含字符串类型的属性键，也就是传统的属性名。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;&#125;;</div><div class="line"><span class="keyword">var</span> a = <span class="built_in">Symbol</span>(<span class="string">"a"</span>);</div><div class="line"><span class="keyword">var</span> b = <span class="built_in">Symbol</span>.for(<span class="string">"b"</span>);</div><div class="line"></div><div class="line">obj[a] = <span class="string">"localSymbol"</span>;</div><div class="line">obj[b] = <span class="string">"globalSymbol"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> objectSymbols = <span class="built_in">Object</span>.getOwnPropertySymbols(obj);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(objectSymbols.length); <span class="comment">// 2</span></div><div class="line"><span class="built_in">console</span>.log(objectSymbols)         <span class="comment">// [Symbol(a), Symbol(b)]</span></div><div class="line"><span class="built_in">console</span>.log(objectSymbols[<span class="number">0</span>])      <span class="comment">// Symbol(a)</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Object-getPrototypeOf-object"><a href="#Object-getPrototypeOf-object" class="headerlink" title="Object.getPrototypeOf(object)"></a>Object.getPrototypeOf(object)</h2><p>返回指定对象的原型（也就是该对象内部属性[[Prototype]]的值）。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> proto = &#123;&#125;;</div><div class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.create(proto);</div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(obj) === proto; <span class="comment">// true</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="Object-entries-obj"><a href="#Object-entries-obj" class="headerlink" title="Object.entries(obj)"></a>Object.entries(obj)</h2><p>Object.entries方法返回一个包含由给定对象所有<strong>自身可枚举</strong>属性的属性名和属性值组成的 [属性名，属性值] 键值对的数组。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span>, <span class="attr">baz</span>: <span class="number">42</span> &#125;;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.entries(obj)); <span class="comment">// [ ['foo', 'bar'], ['baz', 42] ]</span></div><div class="line"></div><div class="line"><span class="comment">// 类数组对象</span></div><div class="line"><span class="keyword">var</span> obj = &#123; <span class="number">0</span>: <span class="string">'a'</span>, <span class="number">1</span>: <span class="string">'b'</span>, <span class="number">2</span>: <span class="string">'c'</span> &#125;;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.entries(obj)); <span class="comment">// [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]</span></div><div class="line"></div><div class="line"><span class="comment">// 带有随机（非顺序）排列属性名的类数组对象</span></div><div class="line"><span class="keyword">var</span> an_obj = &#123; <span class="number">100</span>: <span class="string">'a'</span>, <span class="number">2</span>: <span class="string">'b'</span>, <span class="number">7</span>: <span class="string">'c'</span> &#125;;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.entries(an_obj)); <span class="comment">// [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]</span></div><div class="line"></div><div class="line"><span class="comment">// getFoo是不可枚举属性</span></div><div class="line"><span class="keyword">var</span> my_obj = <span class="built_in">Object</span>.create(&#123;&#125;, &#123; <span class="attr">getFoo</span>: &#123; <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.foo; &#125; &#125; &#125;);</div><div class="line">my_obj.foo = <span class="string">"bar"</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.entries(my_obj)); <span class="comment">// [ ['foo', 'bar'] ]</span></div><div class="line"></div><div class="line"><span class="comment">// 非对象参数会被强行视为对象</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.entries(<span class="string">"foo"</span>)); <span class="comment">// [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Object-keys-obj"><a href="#Object-keys-obj" class="headerlink" title="Object.keys(obj)"></a>Object.keys(obj)</h2><p>返回一个由给定对象的所有<strong>可枚举自身属性</strong>的属性名组成的数组，数组中属性名的排列顺序和使用for-in循环遍历该对象时返回的顺序一致 (顺序一致不包括数字属性)（<strong>两者的主要区别是 for-in 还会遍历出一个对象从其原型链上继承到的可枚举属性</strong>）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</div><div class="line">alert(<span class="built_in">Object</span>.keys(arr)); <span class="comment">// 弹出"0,1,2"</span></div><div class="line"></div><div class="line"><span class="comment">// 类数组对象</span></div><div class="line"><span class="keyword">var</span> obj = &#123; <span class="number">0</span> : <span class="string">"a"</span>, <span class="number">1</span> : <span class="string">"b"</span>, <span class="number">2</span> : <span class="string">"c"</span>&#125;;</div><div class="line">alert(<span class="built_in">Object</span>.keys(obj)); <span class="comment">// 弹出"0,1,2"</span></div><div class="line"></div><div class="line"><span class="comment">// getFoo是个不可枚举的属性</span></div><div class="line"><span class="keyword">var</span> my_obj = <span class="built_in">Object</span>.create(&#123;&#125;, &#123; <span class="attr">getFoo</span> : &#123; <span class="attr">value</span> : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.foo &#125; &#125; &#125;);</div><div class="line">my_obj.foo = <span class="number">1</span>;</div><div class="line"></div><div class="line">alert(<span class="built_in">Object</span>.keys(my_obj)); <span class="comment">// 只弹出foo</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Object-values-obj"><a href="#Object-values-obj" class="headerlink" title="Object.values(obj)"></a>Object.values(obj)</h2><p>用法同Object.keys,不过返回的是所有的自身可枚举属性值的数组。目前处于ES7提案中。</p>
+<hr>
+<h2 id="Object-prototype-hasOwnProperty"><a href="#Object-prototype-hasOwnProperty" class="headerlink" title="Object.prototype.hasOwnProperty()"></a>Object.prototype.hasOwnProperty()</h2><p>返回一个布尔值，检测一个对象是否含有特定的自身属性；和 in 运算符不同，该方法会忽略掉那些从原型链上继承到的属性。</p>
+<blockquote>
+<p>obj.hasOwnProperty(prop)</p>
+<ul>
+<li><strong>prop:</strong> 要检测的属性  字符串 名称或者 Symbol。</li>
+</ul>
+</blockquote>
+<p>下面的例子演示了 hasOwnProperty 方法对待自身属性和继承属性的区别：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">o = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">o.prop = <span class="string">'exists'</span>;</div><div class="line">o.hasOwnProperty(<span class="string">'prop'</span>);             <span class="comment">// 返回 true</span></div><div class="line">o.hasOwnProperty(<span class="string">'toString'</span>);         <span class="comment">// 返回 false</span></div><div class="line">o.hasOwnProperty(<span class="string">'hasOwnProperty'</span>);   <span class="comment">// 返回 false</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ParentClass</span>(<span class="params"></span>) </span>&#123;<span class="keyword">this</span>.age = <span class="number">12</span>;&#125;</div><div class="line">ParentClass.prototype.inheritedMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">ChildClass</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.prop = <span class="number">5</span>;</div><div class="line">  <span class="keyword">this</span>.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">ChildClass.prototype = <span class="keyword">new</span> ParentClass;</div><div class="line">ChildClass.prototype.prototypeMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> ChildClass();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> name <span class="keyword">in</span> child) &#123;</div><div class="line">    <span class="keyword">if</span> (child.hasOwnProperty(name)) &#123;</div><div class="line">        <span class="built_in">console</span>.log(name); <span class="comment">//prop, method</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        alert(name); <span class="comment">// age,prototypeMethod,inheritedMethod</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Object-prototype-isPrototypeOf"><a href="#Object-prototype-isPrototypeOf" class="headerlink" title="Object.prototype.isPrototypeOf()"></a>Object.prototype.isPrototypeOf()</h2><p>用于测试一个对象是否存在于另一个对象的原型链上。</p>
+<blockquote>
+<p>prototypeObj.isPrototypeOf(object)</p>
+<ul>
+<li><strong>object:</strong> 在该对象的原型链上搜寻</li>
+</ul>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fee</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// . . .</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fi</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// . . .</span></div><div class="line">&#125;</div><div class="line">Fi.prototype = <span class="keyword">new</span> Fee();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// . . .</span></div><div class="line">&#125;</div><div class="line">Fo.prototype = <span class="keyword">new</span> Fi();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fum</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// . . .</span></div><div class="line">&#125;</div><div class="line">Fum.prototype = <span class="keyword">new</span> Fo();</div><div class="line"></div><div class="line"><span class="keyword">var</span> fum = <span class="keyword">new</span> Fum();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(Fi.prototype.isPrototypeOf(fum));</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Object-prototype-propertyIsEnumerable"><a href="#Object-prototype-propertyIsEnumerable" class="headerlink" title="Object.prototype.propertyIsEnumerable()"></a>Object.prototype.propertyIsEnumerable()</h2><p>返回一个布尔值，表明指定的属性名是否是当前对象<strong>可枚举的自身属性</strong>。</p>
+<blockquote>
+<p>obj.propertyIsEnumerable(prop)</p>
+</blockquote>
+<ul>
+<li><strong>prop:</strong> 需要测试的属性名。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//自定义对象和引擎内置对象</span></div><div class="line"><span class="keyword">var</span> a = [<span class="string">'is enumerable'</span>];</div><div class="line"></div><div class="line">a.propertyIsEnumerable(<span class="number">0</span>);          <span class="comment">// 返回 true</span></div><div class="line">a.propertyIsEnumerable(<span class="string">'length'</span>);   <span class="comment">// 返回 false</span></div><div class="line"></div><div class="line"><span class="built_in">Math</span>.propertyIsEnumerable(<span class="string">'random'</span>);   <span class="comment">// 返回 false</span></div><div class="line"><span class="keyword">this</span>.propertyIsEnumerable(<span class="string">'Math'</span>);     <span class="comment">// 返回 false</span></div><div class="line"></div><div class="line"><span class="comment">//自身属性和继承属性</span></div><div class="line"><span class="keyword">var</span> a = [];</div><div class="line">a.propertyIsEnumerable(<span class="string">'constructor'</span>);         <span class="comment">// 返回 false</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstConstructor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.property = <span class="string">'is not enumerable'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">firstConstructor.prototype.firstMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">secondConstructor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.method = <span class="function"><span class="keyword">function</span> <span class="title">method</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">'is enumerable'</span>; &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">secondConstructor.prototype = <span class="keyword">new</span> firstConstructor();</div><div class="line">secondConstructor.prototype.constructor = secondConstructor;</div><div class="line"></div><div class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> secondConstructor();</div><div class="line">o.arbitraryProperty = <span class="string">'is enumerable'</span>;</div><div class="line"></div><div class="line">o.propertyIsEnumerable(<span class="string">'arbitraryProperty'</span>);   <span class="comment">// 返回 true</span></div><div class="line">o.propertyIsEnumerable(<span class="string">'method'</span>);              <span class="comment">// 返回 true</span></div><div class="line">o.propertyIsEnumerable(<span class="string">'property'</span>);            <span class="comment">// 返回 false</span></div><div class="line"></div><div class="line">o.property = <span class="string">'is enumerable'</span>;</div><div class="line"></div><div class="line">o.propertyIsEnumerable(<span class="string">'property'</span>);            <span class="comment">// 返回 true</span></div><div class="line"></div><div class="line"><span class="comment">// 这些返回fasle，是因为，在原型链上propertyIsEnumerable不被考虑</span></div><div class="line"><span class="comment">// (尽管最后两个在for-in循环中可以被循环出来)。</span></div><div class="line">o.propertyIsEnumerable(<span class="string">'prototype'</span>);   <span class="comment">// 返回 false (根据 JS 1.8.1/FF3.6)</span></div><div class="line">o.propertyIsEnumerable(<span class="string">'constructor'</span>); <span class="comment">// 返回 false</span></div><div class="line">o.propertyIsEnumerable(<span class="string">'firstMethod'</span>); <span class="comment">// 返回 false</span></div></pre></td></tr></table></figure>
+<hr>
+<p> 其他还有<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toLocaleString" target="_blank" rel="external">Object.prototype.toLocaleString()</a>、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="external">Object.prototype.toString()</a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf" target="_blank" rel="external">Object.prototype.valueOf()</a>等方法，很少用到，就不赘述了。</p>
+
+        
+    </div>
+    <!-- footer -->
+    <div class="article-footer">
+        <i class="iconfont icon-calendar"></i>
+        <span class="article-footer-item">2017-02-24</span>
+        
+            <i class="iconfont icon-book"></i>
+            <span class="article-footer-item">
+                <a class="category-link" href="/categories/技术/">技术</a>
+            </span>
+        
+        
+            <i class="iconfont icon-tags"></i>
+            <span class="article-footer-item">
+                <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+            </span>
+        
+    </div>
+    
+        
+<nav class="article-nav">
+    
+    
+        <a href="/2017/02/23/object1/" class="next">下一篇</a>
+    
+</nav>
+
+    
+</article>
+
+</div>
+</div>
+</body>
+</html>
