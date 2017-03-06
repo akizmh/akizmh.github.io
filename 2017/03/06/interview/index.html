@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name="viewport">
     
-    <title>akizmh&#39;s blog</title>
+    <title>题集(1) | akizmh&#39;s blog</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <div class="m-aside m-aside-home">
+    <div class="m-aside ">
     <div class="main">
         <div class="username">破秋风</div>
         <div class="motto">赞美太阳</div>
@@ -29,7 +29,7 @@
     <div class="m-menu">
     <ul>
         
-            <li><a href="/" class="current">首页
+            <li><a href="/" class="">首页
 </a></li>
         
             <li><a href="/archives" class="">归档
@@ -47,14 +47,12 @@
     </ul>
 </div>
     <div class="m-content"><div class="g-content m-article">
-  
-    
-      <article class="index-article">
+    <article class="index-article">
     <!-- title -->
     <h3 class="article-title">
         
             
-                <a href="/2017/03/06/interview/">题集(1)</a>
+                题集(1)
             
         
     </h3>
@@ -149,188 +147,18 @@
         
     </div>
     
-</article>
-
+        
+<nav class="article-nav">
     
-      <article class="index-article">
-    <!-- title -->
-    <h3 class="article-title">
-        
-            
-                <a href="/2017/02/24/object2/">Object方法整理(2)</a>
-            
-        
-    </h3>
-    <!-- content -->
-    <div class="article-content">
-        
-            <p>接上篇，本篇介绍Object上的获取型方法以及Oject原型上定义的方法。</p>
-<h2 id="Object-getOwnPropertyDescriptor-obj-prop"><a href="#Object-getOwnPropertyDescriptor-obj-prop" class="headerlink" title="Object.getOwnPropertyDescriptor(obj, prop)"></a>Object.getOwnPropertyDescriptor(obj, prop)</h2><p>返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</p>
-<ul>
-<li><strong>obj:</strong> 要查看的对象</li>
-<li><strong>prop:</strong> 一个属性名称，该属性的属性描述符将被返回</li>
-</ul>
-<p>如果指定的属性存在于对象上，则返回其属性描述符（property descriptor），否则返回 undefined。 </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o, d;</div><div class="line"></div><div class="line">o = &#123; get foo() &#123; <span class="keyword">return</span> <span class="number">17</span>; &#125; &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"foo"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, get: /*访问器函数*/, set: undefined &#125;</span></div><div class="line"></div><div class="line">o = &#123; <span class="attr">bar</span>: <span class="number">42</span> &#125;;</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"bar"</span>);</div><div class="line"><span class="comment">// d is &#123; configurable: true, enumerable: true, value: 42, writable: true &#125;</span></div><div class="line"></div><div class="line">o = &#123;&#125;;</div><div class="line"><span class="built_in">Object</span>.defineProperty(o, <span class="string">"baz"</span>, &#123; <span class="attr">value</span>: <span class="number">8675309</span>&#125;);</div><div class="line">d = <span class="built_in">Object</span>.getOwnPropertyDescriptor(o, <span class="string">"baz"</span>);</div><div class="line"><span class="comment">// d is &#123; value: 8675309, writable: false, enumerable: false, configurable: false &#125;</span></div></pre></td></tr></table></figure>
-<hr>
-            <p class="article-more-link">
-                <a href="/2017/02/24/object2/#more">更多...</a>
-            </p>
-        
-    </div>
-    <!-- footer -->
-    <div class="article-footer">
-        <i class="iconfont icon-calendar"></i>
-        <span class="article-footer-item">2017-02-24</span>
-        
-            <i class="iconfont icon-book"></i>
-            <span class="article-footer-item">
-                <a class="category-link" href="/categories/技术/">技术</a>
-            </span>
-        
-        
-            <i class="iconfont icon-tags"></i>
-            <span class="article-footer-item">
-                <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
-            </span>
-        
-    </div>
+    
+        <a href="/2017/02/24/object2/" class="next">下一篇</a>
+    
+</nav>
+
     
 </article>
 
-    
-      <article class="index-article">
-    <!-- title -->
-    <h3 class="article-title">
-        
-            
-                <a href="/2017/02/23/object1/">Object方法整理(1)</a>
-            
-        
-    </h3>
-    <!-- content -->
-    <div class="article-content">
-        
-            <p>最近看ES6关于对象的扩展和新关键字class的时候，发现之前对于JavaScript里面的方法有点模糊，于是重新学习了一下Object相关方法。主要参考的是<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object">MDN网站</a>。</p>
-<p>根据功能不同，我对object的方法做了分类，如下：</p>
-<ul>
-<li><strong>操作型:</strong> assign, create, defineProperty, defineProperties, freeze, preventExtensions, seal, setPrototypeOf</li>
-<li><strong>判断型:</strong> is, isExtensible, isFrozen, isSealed</li>
-<li><strong>获取型:</strong> getOwnPropertyDescriptor, getOwnPropertyDescriptors, getOwnPropertyNames, getOwnPropertySymbols, getPrototypeOf, entries, keys, values</li>
-</ul>
-<p>由于Object方法较大，篇幅较长，分成两部分。本篇主要讲操作型和判断型。</p>
-            <p class="article-more-link">
-                <a href="/2017/02/23/object1/#more">更多...</a>
-            </p>
-        
-    </div>
-    <!-- footer -->
-    <div class="article-footer">
-        <i class="iconfont icon-calendar"></i>
-        <span class="article-footer-item">2017-02-23</span>
-        
-            <i class="iconfont icon-book"></i>
-            <span class="article-footer-item">
-                <a class="category-link" href="/categories/技术/">技术</a>
-            </span>
-        
-        
-            <i class="iconfont icon-tags"></i>
-            <span class="article-footer-item">
-                <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
-            </span>
-        
-    </div>
-    
-</article>
-
-    
-      <article class="index-article">
-    <!-- title -->
-    <h3 class="article-title">
-        
-            
-                <a href="/2017/02/20/es6-class/">class -《ECMAScript 6 入门》学习笔记</a>
-            
-        
-    </h3>
-    <!-- content -->
-    <div class="article-content">
-        
-            <p>最近在看阮一峰的<a href="http://es6.ruanyifeng.com/">《ECMAScript 6 入门》</a>。以下内容为学习笔记和摘要，代码大部分也用了那边。</p>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>ES5中我们创建一个类一般使用构造函数，ES6里面可以用class关键字实现，是一种语法糖。<br>ES5 写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span>(<span class="params">x, y</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.x = x;</div><div class="line">  <span class="keyword">this</span>.y = y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Point.prototype.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'('</span> + <span class="keyword">this</span>.x + <span class="string">', '</span> + <span class="keyword">this</span>.y + <span class="string">')'</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>ES6写法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(x, y) &#123;</div><div class="line">    <span class="keyword">this</span>.x = x;</div><div class="line">    <span class="keyword">this</span>.y = y;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  toString() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'('</span> + <span class="keyword">this</span>.x + <span class="string">', '</span> + <span class="keyword">this</span>.y + <span class="string">')'</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2017/02/20/es6-class/#more">更多...</a>
-            </p>
-        
-    </div>
-    <!-- footer -->
-    <div class="article-footer">
-        <i class="iconfont icon-calendar"></i>
-        <span class="article-footer-item">2017-02-20</span>
-        
-            <i class="iconfont icon-book"></i>
-            <span class="article-footer-item">
-                <a class="category-link" href="/categories/技术/">技术</a>
-            </span>
-        
-        
-            <i class="iconfont icon-tags"></i>
-            <span class="article-footer-item">
-                <a class="tag-link" href="/tags/ES6/">ES6</a>
-            </span>
-        
-    </div>
-    
-</article>
-
-    
-      <article class="index-article">
-    <!-- title -->
-    <h3 class="article-title">
-        
-            
-                <a href="/2017/02/13/githubBlog/">github博客诞生记</a>
-            
-        
-    </h3>
-    <!-- content -->
-    <div class="article-content">
-        
-            <p>经历了年底的一波加班，年前总算有点时间可以学习下新知识了。首要任务就是把github的博客搭建起来，把一些学习心得梳理之后记录在这里。</p>
-<p>一直以为github的博客是类似于博客园一样，有专门一个地方可以写博客的。其实不然，你要先建立一个仓库用来放github pages。这个就不赘述了，网上教程也很多。</p>
-<p>至于如何生成github pages，jekyll推荐的比较多，我也去尝试了一下，需要安装ruby环境，编译本地调试非常不便。于是转为基于node环境的<a href="https://hexo.io/zh-cn/">hexo</a>。本博客就是基于hexo搭建起来的。</p>
-<h4 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h4><ol>
-<li>安装 <a href="http://nodejs.cn/">nodejs</a></li>
-<li>安装 <a href="https://git-scm.com/">git</a></li>
-<li>准备github仓库<br>注册了github账号之后，创建一个新的仓库。访问<a href="https://github.com/new，建立一个基于你的用户名的repository。以我为例，就是akizmh.github.io。新版本的github默认会把这个repo认为是你的github">https://github.com/new，建立一个基于你的用户名的repository。以我为例，就是akizmh.github.io。新版本的github默认会把这个repo认为是你的github</a> pages。<br><strong>注意：</strong>创建github pages仓库的时候最好先去github上看看有无同名的。我一开始创建的是zmh.github.io，结果博客创建代码也提交了，但是页面就是显示不正确，后来才发现，github上已经有同名项目了，我访问的是别人的github pages。</li>
-</ol>
-            <p class="article-more-link">
-                <a href="/2017/02/13/githubBlog/#more">更多...</a>
-            </p>
-        
-    </div>
-    <!-- footer -->
-    <div class="article-footer">
-        <i class="iconfont icon-calendar"></i>
-        <span class="article-footer-item">2017-02-13</span>
-        
-            <i class="iconfont icon-book"></i>
-            <span class="article-footer-item">
-                <a class="category-link" href="/categories/技术/">技术</a>
-            </span>
-        
-        
-    </div>
-    
-</article>
-
-    
-  
-  
 </div>
-
 </div>
 </body>
 </html>
